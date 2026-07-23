@@ -1,15 +1,12 @@
-﻿import 'dart:typed_data';
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:url_launcher/url_launcher.dart';
-import '../data/portfolio_pieces.dart';
-import '../models/portfolio_piece.dart';
-import '../theme/gallery_theme.dart';
+﻿import "dart:typed_data";
+import "package:flutter/material.dart";
+import "package:image_picker/image_picker.dart";
+import "package:url_launcher/url_launcher.dart";
+import "../data/portfolio_pieces.dart";
+import "../models/portfolio_piece.dart";
+import "../theme/gallery_theme.dart";
 
-// Controls the order sections appear in. Any size not in this list (e.g. a
-// custom size) is still shown, just grouped after these in whatever order
-// it's found.
-const List<String> _sizeOrder = ['A1', 'A2', 'A3', 'A4'];
+const List<String> _sizeOrder = ["A1", "A2", "A3", "A4"];
 
 class PortfolioScreen extends StatefulWidget {
   const PortfolioScreen({super.key});
@@ -19,7 +16,7 @@ class PortfolioScreen extends StatefulWidget {
 }
 
 class _PortfolioScreenState extends State<PortfolioScreen> {
-  static const String whatsappNumber = '2349164200997';
+  static const String whatsappNumber = "2349164200997";
 
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
@@ -61,16 +58,16 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     final imageLine = _referenceImageName != null
-        ? '\nReference photo attached: $_referenceImageName (please attach it in this chat)'
-        : '';
+        ? "\nReference photo attached: $_referenceImageName (please attach it in this chat)"
+        : "";
 
-    final text = 'Hi, I would like to work with you.\n'
-        'Name: ${_nameController.text}\n'
-        'Contact: ${_contactController.text}\n'
-        'Details: ${_messageController.text}$imageLine';
+    final text = "Hi, I would like to work with you.\n"
+        "Name: ${_nameController.text}\n"
+        "Contact: ${_contactController.text}\n"
+        "Details: ${_messageController.text}$imageLine";
 
     final url = Uri.parse(
-      'https://wa.me/$whatsappNumber?text=${Uri.encodeComponent(text)}',
+      "https://wa.me/$whatsappNumber?text=${Uri.encodeComponent(text)}",
     );
     await launchUrl(url, mode: LaunchMode.externalApplication);
   }
@@ -95,7 +92,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     ];
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Work With Me')),
+      appBar: AppBar(title: const Text("Work With Me")),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Center(
@@ -105,13 +102,12 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Past commissioned portrait work, organized by print size. '
-                  'If you would like a custom piece, fill out the form below.',
+                  "Past commissioned portrait work, organized by print size. If you would like a custom piece, fill out the form below.",
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 const SizedBox(height: 32),
                 for (final size in orderedSizes) ...[
-                  _sectionHeading(context, '$size Portraits'),
+                  _sectionHeading(context, "$size Portraits"),
                   const SizedBox(height: 16),
                   _PortfolioGrid(
                     pieces: groups[size]!,
@@ -121,7 +117,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                 ],
                 const Divider(),
                 const SizedBox(height: 24),
-                _sectionHeading(context, "Let's Work Together"),
+                _sectionHeading(context, "Let\'s Work Together"),
                 const SizedBox(height: 16),
                 _InquiryForm(
                   formKey: _formKey,
@@ -184,7 +180,7 @@ class _PortfolioGrid extends StatelessWidget {
                   color: GalleryColors.surface,
                   border: Border.all(color: GalleryColors.divider),
                 ),
-                child: piece.imageUrl.startsWith('http')
+                child: piece.imageUrl.startsWith("http")
                     ? Image.network(piece.imageUrl, fit: BoxFit.cover)
                     : Image.asset(piece.imageUrl, fit: BoxFit.cover),
               ),
@@ -232,27 +228,27 @@ class _InquiryForm extends StatelessWidget {
           children: [
             TextFormField(
               controller: nameController,
-              decoration: const InputDecoration(labelText: 'Your Name'),
-              validator: (v) => (v == null || v.trim().isEmpty) ? 'Required' : null,
+              decoration: const InputDecoration(labelText: "Your Name"),
+              validator: (v) => (v == null || v.trim().isEmpty) ? "Required" : null,
             ),
             const SizedBox(height: 16),
             TextFormField(
               controller: contactController,
-              decoration: const InputDecoration(labelText: 'Phone / WhatsApp / Email'),
-              validator: (v) => (v == null || v.trim().isEmpty) ? 'Required' : null,
+              decoration: const InputDecoration(labelText: "Phone / WhatsApp / Email"),
+              validator: (v) => (v == null || v.trim().isEmpty) ? "Required" : null,
             ),
             const SizedBox(height: 16),
             TextFormField(
               controller: messageController,
               decoration: const InputDecoration(
-                labelText: 'What kind of piece are you looking for?',
+                labelText: "What kind of piece are you looking for?",
               ),
               maxLines: 4,
-              validator: (v) => (v == null || v.trim().isEmpty) ? 'Required' : null,
+              validator: (v) => (v == null || v.trim().isEmpty) ? "Required" : null,
             ),
             const SizedBox(height: 16),
             const Text(
-              'REFERENCE PHOTO (OPTIONAL)',
+              "REFERENCE PHOTO (OPTIONAL)",
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w700,
@@ -278,14 +274,14 @@ class _InquiryForm extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          referenceImageName ?? '',
+                          referenceImageName ?? "",
                           style: Theme.of(context).textTheme.bodyMedium,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       TextButton(
                         onPressed: onRemoveImage,
-                        child: const Text('Remove'),
+                        child: const Text("Remove"),
                       ),
                     ],
                   ),
@@ -295,12 +291,12 @@ class _InquiryForm extends StatelessWidget {
               OutlinedButton.icon(
                 onPressed: onPickImage,
                 icon: const Icon(Icons.upload_outlined, size: 18),
-                label: const Text('Upload a reference photo'),
+                label: const Text("Upload a reference photo"),
               ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: onSubmit,
-              child: const Text('Submit & Continue on WhatsApp'),
+              child: const Text("Submit & Continue on WhatsApp"),
             ),
           ],
         ),

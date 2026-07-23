@@ -1,37 +1,37 @@
-﻿import 'package:flutter/material.dart';
-import '../data/sample_artworks.dart';
-import '../models/artwork.dart';
-import '../theme/gallery_theme.dart';
-import '../utils/format.dart';
-import '../widgets/social_icons_row.dart';
-import '../widgets/work_with_me_bar.dart';
-import 'artwork_detail_screen.dart';
-import 'portfolio_screen.dart';
+﻿import "package:flutter/material.dart";
+import "../data/sample_artworks.dart";
+import "../models/artwork.dart";
+import "../theme/gallery_theme.dart";
+import "../utils/format.dart";
+import "artwork_detail_screen.dart";
+import "portfolio_screen.dart";
 
 class GalleryScreen extends StatelessWidget {
   const GalleryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Web layout: more columns on wide screens, fewer on mobile.
     final width = MediaQuery.of(context).size.width;
     final crossAxisCount = width > 1100 ? 3 : (width > 650 ? 2 : 1);
 
     return Scaffold(
       appBar: AppBar(
-        titleSpacing: 16,
-        title: Row(
-          children: const [
-            Expanded(
-              child: Text(
-                'KARMENOUSHART',
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 16, letterSpacing: 3, fontWeight: FontWeight.w700),
-              ),
-            ),
-            SocialIconsRow(),
-          ],
+        title: const Text(
+          "KARMENOUSHART",
+          style: TextStyle(fontSize: 16, letterSpacing: 2, fontWeight: FontWeight.w700),
         ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const PortfolioScreen()),
+              );
+            },
+            child: const Text("Work With Me"),
+          ),
+          const SizedBox(width: 12),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(24),
@@ -48,14 +48,6 @@ class GalleryScreen extends StatelessWidget {
             return _ArtworkCard(artwork: artwork);
           },
         ),
-      ),
-      bottomNavigationBar: WorkWithMeBar(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const PortfolioScreen()),
-          );
-        },
       ),
     );
   }
@@ -86,7 +78,7 @@ class _ArtworkCard extends StatelessWidget {
                 color: GalleryColors.surface,
                 border: Border.all(color: GalleryColors.divider),
               ),
-              child: artwork.imageUrl.startsWith('http')
+              child: artwork.imageUrl.startsWith("http")
                   ? Image.network(artwork.imageUrl, fit: BoxFit.cover)
                   : Image.asset(artwork.imageUrl, fit: BoxFit.cover),
             ),
@@ -98,14 +90,14 @@ class _ArtworkCard extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            '${artwork.medium} \u00b7 ${artwork.year}',
+            "${artwork.medium} \u00b7 ${artwork.year}",
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 4),
           Text(
             artwork.originalAvailable
                 ? formatNaira(artwork.originalPrice)
-                : 'Original sold \u2014 prints available',
+                : "Original sold \u2014 prints available",
             style: const TextStyle(
               color: GalleryColors.accent,
               fontWeight: FontWeight.w600,
